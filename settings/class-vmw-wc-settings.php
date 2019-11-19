@@ -24,10 +24,6 @@ class Vmw_Wc_Settings
      */
     protected $plugin_version;
 
-	/**
-	 * @var Vmw_Wc_Loader $loader
-	 */
-    protected $loader;
 
     /**
      * Vmw_Wc_Settings constructor.
@@ -68,5 +64,7 @@ class Vmw_Wc_Settings
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
+
+        include_once __DIR__ . '/pages/settings/main.php';
     }
 }

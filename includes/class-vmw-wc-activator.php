@@ -49,7 +49,7 @@ class Vmw_Wc_Activator
 
     public static function register_options()
     {
-        foreach ( static::$options as $option => $default ) {
+        foreach (static::$options as $option => $default) {
             if (!get_option($option)) {
                 add_option($option, $default);
             }
@@ -62,7 +62,8 @@ class Vmw_Wc_Activator
             $message = sprintf('Minimum WP version required %1$s. Please update to a later version', static::$min_wp_version);
             Vmw_Wc_Admin_Notices::error($message);
             \add_action(
-                'admin_init', function () {
+                'admin_init',
+                function () {
                     \deactivate_plugins([plugin_basename(VMW_WC_FILE)]);
                 }
             );
@@ -82,5 +83,4 @@ class Vmw_Wc_Activator
         
         return static::$bloginfo[$key] = get_bloginfo($key);
     }
-    
 }

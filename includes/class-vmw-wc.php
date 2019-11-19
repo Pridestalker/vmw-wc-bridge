@@ -69,7 +69,7 @@ class Vmw_Wc
      */
     public function __construct()
     {
-        if (defined('VMW_WC_VERSION') ) {
+        if (defined('VMW_WC_VERSION')) {
             $this->version = VMW_WC_VERSION;
         } else {
             $this->version = '1.0.0';
@@ -124,7 +124,6 @@ class Vmw_Wc
         include_once plugin_dir_path(__DIR__) . 'settings/class-vmw-wc-settings.php';
 
         $this->loader = new Vmw_Wc_Loader();
-
     }
 
     /**
@@ -142,7 +141,6 @@ class Vmw_Wc
         $plugin_i18n = new Vmw_Wc_i18n();
 
         $this->get_loader()->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
-
     }
 
     /**
@@ -159,14 +157,14 @@ class Vmw_Wc
 
         $this->get_loader()->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->get_loader()->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-
     }
 
     private function define_settings_hooks()
     {
         $plugin_settings = Vmw_Wc_Settings::create($this->get_plugin_name(), $this->get_version());
 
-        $this->get_loader()->add_action('admin_init', $plugin_settings, 'register');
+        $this->get_loader()->add_action('admin_menu', $plugin_settings, 'register');
+        $this->get_loader()->add_action('admin_init', $plugin_settings, '');
     }
 
     /**
@@ -212,5 +210,4 @@ class Vmw_Wc
     {
         return $this->version;
     }
-
 }

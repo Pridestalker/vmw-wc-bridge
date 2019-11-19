@@ -132,4 +132,9 @@ class Vmw_Wc_Loader
 
     }
 
+    public static function create(): Vmw_Wc_Loader
+    {
+    	return new self();
+    }
+
 }
