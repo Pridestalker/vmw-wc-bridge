@@ -25,13 +25,13 @@ class Vmw_Wc_Activator
     private static $min_wp_version = '5.0';
 
     protected static $bloginfo = [];
-    
+
     protected static $options = [
         'vmw_base_url'  => 'https://verkoper.vindmijnwijn.nl/',
         'vmw_key'       => '',
         'vmw_secret'    => '',
     ];
-    
+
     /**
      * Runs on plugin activation.
      *
@@ -43,7 +43,7 @@ class Vmw_Wc_Activator
     {
 
         static::is_correct_wp_version();
-        static::register_options();
+        \add_action('admin_init', ['Vmw_Wc_Activator', 'register_options']);
         \do_action('vmw/bridge/init');
     }
 
@@ -55,32 +55,35 @@ class Vmw_Wc_Activator
             }
         }
     }
-    
+
     public static function is_correct_wp_version()
     {
         if (version_compare(static::get_bloginfo('version'), static::$min_wp_version) === -1) {
-            $message = sprintf('Minimum WP version required %1$s. Please update to a later version', static::$min_wp_version);
+            $message = sprintf(
+                'Minimum WP version required %1$s. Please update to a later version',
+                static::$min_wp_version
+            );
             Vmw_Wc_Admin_Notices::error($message);
             \add_action(
                 'admin_init',
-                function () {
+                static function () {
                     \deactivate_plugins([plugin_basename(VMW_WC_FILE)]);
                 }
             );
         }
     }
-    
+
     public static function get_bloginfo($key = 'name')
     {
         return static::set_get_bloginfo($key);
     }
-    
+
     public static function set_get_bloginfo($key)
     {
         if (isset(static::$bloginfo[$key])) {
             return static::$bloginfo[$key];
         }
-        
+
         return static::$bloginfo[$key] = get_bloginfo($key);
     }
 }

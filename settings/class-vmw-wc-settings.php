@@ -35,6 +35,8 @@ class Vmw_Wc_Settings
     {
         $this->plugin_name = $plugin_name;
         $this->plugin_version = $plugin_version;
+
+        $this->includes();
     }
 
 
@@ -54,7 +56,7 @@ class Vmw_Wc_Settings
             __('VMW Bridge Settings', 'vmw-wc'),
             __('VMW Bridge Settings', 'vmw-wc'),
             'manage_options',
-            'vmw-wc-bridge-settings',
+            'vmw-wc-bridge-main-settings',
             ['Vmw_Wc_Settings', 'render_page']
         );
     }
@@ -66,5 +68,60 @@ class Vmw_Wc_Settings
         }
 
         include_once __DIR__ . '/pages/settings/main.php';
+    }
+
+    public static function main_settings_credentials()
+    {
+        add_settings_section(
+            'vmw-wc-bridge-main-credentials-section',
+            __('Login credentials', 'vmw-wc'),
+            '__return_false',
+            'vmw-wc-bridge-main-settings'
+        );
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_base_url'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_key'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_secret'
+        );
+
+        add_settings_field(
+            'vmw_base_url',
+            __('Vindmijnwijn.nl portal url', 'vmw-wc'),
+            ['Vmw_Wc_Settings_Main_fields', 'base_url_callback'],
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-credentials-section'
+        );
+
+        add_settings_field(
+            'vmw_key',
+            __('Vindmijnwijn.nl portal key', 'vmw-wc'),
+            ['Vmw_Wc_Settings_Main_fields', 'key_callback'],
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-credentials-section'
+        );
+    }
+
+    public static function settings_whitelist($whitelist_options)
+    {
+        $whitelist_options['vmw-wc-bridge-main-settings'] = [
+            'vmw_base_url',
+            'vmw_key',
+        ];
+
+        return $whitelist_options;
+    }
+
+    public function includes()
+    {
+        require_once __DIR__ . '/fields/main/class-vmw-wc-settings-main-fields.php';
     }
 }

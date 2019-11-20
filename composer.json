@@ -2,6 +2,7 @@
     "require": {
         "symfony/http-client": "^4.3",
         "yahnis-elsts/plugin-update-checker": "^4.8",
-        "dusank/knapsack": "^10.0"
+        "dusank/knapsack": "^10.0",
+        "symfony/mime": "^4.3"
     }
 }

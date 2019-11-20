@@ -80,6 +80,7 @@ class Vmw_Wc
         $this->set_locale();
         $this->define_admin_hooks();
         $this->define_settings_hooks();
+        $this->define_woocommerce_hooks();
     }
 
     /**
@@ -123,6 +124,12 @@ class Vmw_Wc
          */
         include_once plugin_dir_path(__DIR__) . 'settings/class-vmw-wc-settings.php';
 
+        /**
+         * The class responsible for defining all actions and filters that
+         * help with the WooCommerce connection.
+         */
+        include_once plugin_dir_path(__DIR__) . 'woocommerce/class-vmw-wc-woocommerce.php';
+
         $this->loader = new Vmw_Wc_Loader();
     }
 
@@ -164,7 +171,15 @@ class Vmw_Wc
         $plugin_settings = Vmw_Wc_Settings::create($this->get_plugin_name(), $this->get_version());
 
         $this->get_loader()->add_action('admin_menu', $plugin_settings, 'register');
-        $this->get_loader()->add_action('admin_init', $plugin_settings, '');
+        $this->get_loader()->add_action('admin_init', $plugin_settings, 'main_settings_credentials');
+        $this->get_loader()->add_filter('whitelist_options', $plugin_settings, 'settings_whitelist', 11);
+    }
+
+    private function define_woocommerce_hooks()
+    {
+        $plugin_woocommerce = Vmw_Wc_WooCommerce::create($this->get_plugin_name(), $this->get_version());
+
+        $this->get_loader()->add_action('woocommerce_init', $plugin_woocommerce, 'register');
     }
 
     /**
