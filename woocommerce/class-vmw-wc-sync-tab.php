@@ -46,6 +46,7 @@ class Vmw_Wc_Sync_Tab
      */
     public static function sync_tab_content()
     {
+        global $post;
         ?>
         <div id="vmw_sync_product" class="panel woocommerce_options_panel">
             <?php
@@ -71,6 +72,11 @@ class Vmw_Wc_Sync_Tab
                     6           => __('Dessert wine', 'vmw-wc')
                 ]
             ]);
+            submit_button(
+                __('Push to Vindmijnwijn.nl', 'vmw-wc'),
+                'primary',
+                '_push_to_vmw'
+            );
             ?>
         </div>
         <?php
@@ -81,6 +87,9 @@ class Vmw_Wc_Sync_Tab
         static::store_sync_meta($post_id);
         static::store_category_meta($post_id);
 
+        if (isset($_POST['_push_to_vmw'])) {
+            \do_action('vmw/bridge/product/push', $post_id);
+        }
         \do_action('vmw/bridge/product/save/meta', $post_id);
     }
 

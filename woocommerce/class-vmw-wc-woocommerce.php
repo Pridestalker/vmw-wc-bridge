@@ -33,7 +33,7 @@ class Vmw_Wc_WooCommerce
 
     public static function register()
     {
-        \add_action('vmw/bridge/product/save/meta', ['Vmw_Wc_Sync_Product', 'sync_product'], 10, 1);
+        \add_action('vmw/bridge/product/push', ['Vmw_Wc_Sync_Product', 'sync_product'], 10, 1);
 
         \add_filter('woocommerce_product_data_tabs', ['Vmw_Wc_Sync_Tab', 'register_sync_tab']);
         \add_action('woocommerce_product_data_panels', ['Vmw_Wc_Sync_Tab', 'sync_tab_content']);
