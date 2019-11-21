@@ -7,29 +7,25 @@ namespace Composer\Autoload;
 class ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
-        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
-        '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '5d9c5be1aa1fbc12016e2c5bd16bbc70' => __DIR__ . '/..' . '/dusank/knapsack/src/collection_functions.php',
         'e5fde315a98ded36f9b25eb160f6c9fc' => __DIR__ . '/..' . '/dusank/knapsack/src/utility_functions.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'eb560c198217526cfde8ceb63ae508de' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v4p8.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Php73\\' => 23,
-            'Symfony\\Polyfill\\Php72\\' => 23,
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
-            'Symfony\\Contracts\\HttpClient\\' => 29,
-            'Symfony\\Component\\Mime\\' => 23,
-            'Symfony\\Component\\HttpClient\\' => 29,
-        ),
         'P' => 
         array (
-            'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'D' => 
         array (
@@ -38,37 +34,21 @@ class ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php73\\' => 
+        'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php73',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Symfony\\Polyfill\\Php72\\' => 
+        'GuzzleHttp\\Psr7\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'GuzzleHttp\\Promise\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'Symfony\\Polyfill\\Intl\\Idn\\' => 
+        'GuzzleHttp\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
-        ),
-        'Symfony\\Contracts\\HttpClient\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/http-client-contracts',
-        ),
-        'Symfony\\Component\\Mime\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/mime',
-        ),
-        'Symfony\\Component\\HttpClient\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/http-client',
-        ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'DusanKasan\\Knapsack\\' => 
         array (
@@ -76,16 +56,11 @@ class ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2
         ),
     );
 
-    public static $classMap = array (
-        'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2::$classMap;
 
         }, null, ClassLoader::class);
     }

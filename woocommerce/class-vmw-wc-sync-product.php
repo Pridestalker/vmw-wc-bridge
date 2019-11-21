@@ -1,11 +1,5 @@
 <?php
 
-use Symfony\Component\Mime\Part\DataPart;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\Mime\Part\Multipart\FormDataPart;
-use Symfony\Component\HttpClient\Exception\ServerException;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-
 class Vmw_Wc_Sync_Product
 {
     /**
@@ -49,28 +43,44 @@ class Vmw_Wc_Sync_Product
             wp_die(__('No thumbnail supplied. Aborting.', 'vmw-wc'));
         }
         $thumbnail = get_attached_file($thumbnail);
-        $thumbnail = DataPart::fromPath($thumbnail);
-
-        $thumbnail = get_the_post_thumbnail_url($post_id);
+        $thumbnail = fopen($thumbnail, 'rb');
 
         $data = [
-            'name'              => $product->get_title(),
-            'price'             => $product->get_regular_price(),
-            'description'       => $product->get_description(),
-            'short_description' => $product->get_short_description(),
-            'thumbnail'         => $thumbnail,
-            'category'          => $product_category
+            [
+                'name'      => 'name',
+                'contents'  => $product->get_title(),
+            ],
+            [
+                'name'      => 'price',
+                'contents'  => $product->get_regular_price(),
+            ],
+            [
+                'name'      => 'description',
+                'contents'  => $product->get_description(),
+            ],
+            [
+                'name'      => 'short_description',
+                'contents'  => $product->get_short_description(),
+            ],
+            [
+                'name'      => 'thumbnail',
+                'contents'  => $thumbnail,
+            ],
+            [
+                'name'      => 'category',
+                'contents'  => $product_category,
+            ],
         ];
 
-        static::send_to_vmw(new FormDataPart($data));
+        static::send_to_vmw($data);
     }
 
-	/**
-	 * @param array|FormDataPart $data
-	 */
+    /**
+     * @param array $data
+     */
     public static function send_to_vmw($data)
     {
-        if (count($data->getParts()) === 0) {
+        if (count($data) === 0) {
             wp_die(__('Incorrect data passed to Vindmijnwijn.nl, disable product sync to continue.', 'vmw-wc'));
         }
 
@@ -86,19 +96,21 @@ class Vmw_Wc_Sync_Product
 
         $route = sprintf('%sapi/v3/products', trailingslashit($vmw_url));
 
-        $client = HttpClient::create(['auth_bearer' => $token]);
+        $client = new \GuzzleHttp\Client([
+            'headers'   => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+        ]);
+
         try {
             $client->request(
                 'POST',
                 $route,
                 [
-                    'headers'    => $data->getHeaders()->toArray(),
-                    'body'       => $data->bodyToIterable()
+                    'multipart' => $data
                 ]
             );
-        } catch (TransportExceptionInterface $exception) {
-            wp_die($exception->getMessage());
-        } catch (ServerException $exception) {
+        } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
             wp_die($exception->getMessage());
         }
     }
