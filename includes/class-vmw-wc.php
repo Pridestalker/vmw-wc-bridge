@@ -172,6 +172,7 @@ class Vmw_Wc
 
         $this->get_loader()->add_action('admin_menu', $plugin_settings, 'register');
         $this->get_loader()->add_action('admin_init', $plugin_settings, 'main_settings_credentials');
+        $this->get_loader()->add_action('admin_init', $plugin_settings, 'register_attribute_settings');
         $this->get_loader()->add_filter('whitelist_options', $plugin_settings, 'settings_whitelist', 11);
     }
 

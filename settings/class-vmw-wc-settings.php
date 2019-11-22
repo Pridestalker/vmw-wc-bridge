@@ -110,11 +110,128 @@ class Vmw_Wc_Settings
         );
     }
 
+    public static function register_attribute_settings()
+    {
+        add_settings_section(
+            'vmw-wc-bridge-main-attributes-section',
+            __('Attributes', 'vmw-wc'),
+            '__return_false',
+            'vmw-wc-bridge-main-settings'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_country'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_grapes'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_alcohol'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_year'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_classification'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_domain'
+        );
+
+        register_setting(
+            'vmw-wc-bridge-main-settings',
+            'vmw_contents'
+        );
+
+        add_settings_field(
+            'vmw_country',
+            __('Country attribute', 'vmw-wc'),
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_country_input'],
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attributes-section'
+        );
+
+        add_settings_field(
+            'vmw_region',
+            __('Region attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+
+        add_settings_field(
+            'vmw_grapes',
+            __('Grape attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+
+        add_settings_field(
+            'vmw_alcohol',
+            __('Alcohol attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+
+        add_settings_field(
+            'vmw_year',
+            __('Year attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+
+        add_settings_field(
+            'vmw_classification',
+            __('Classification attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+
+        add_settings_field(
+            'vmw_domain',
+            __('Domain attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+
+        add_settings_field(
+            'vmw_contents',
+            __('Contents attribute', 'vmw-wc'),
+            '__return_empty_string',
+            'vmw-wc-bridge-main-settings',
+            'vmw-wc-bridge-main-attribute-section'
+        );
+    }
+
     public static function settings_whitelist($whitelist_options)
     {
         $whitelist_options['vmw-wc-bridge-main-settings'] = [
             'vmw_base_url',
             'vmw_key',
+            'vmw_country',
+            'vmw_region',
+            'vmw_grapes',
+            'vmw_alcohol',
+            'vmw_year',
+            'vmw_classification',
+            'vmw_domain',
+            'vmw_contents'
         ];
 
         return $whitelist_options;
@@ -123,5 +240,6 @@ class Vmw_Wc_Settings
     public function includes()
     {
         require_once __DIR__ . '/fields/main/class-vmw-wc-settings-main-fields.php';
+        require_once __DIR__ . '/fields/attributes/class-vmw-wc-settings-attribute-fields.php';
     }
 }
