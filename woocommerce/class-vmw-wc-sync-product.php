@@ -32,10 +32,13 @@ class Vmw_Wc_Sync_Product
     public static function sync_product($post_id)
     {
         static::includes();
+
         if (!Vmw_Wc_Sync::hasPostSku($post_id)) {
             $sync = Vmw_Wc_New_Product::create($post_id);
-
             $sync->storeProduct();
+        } else {
+            $sync = Vmw_Wc_Existing_Product::create($post_id);
+            $sync->updateProduct();
         }
     }
 

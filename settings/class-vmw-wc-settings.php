@@ -91,10 +91,10 @@ class Vmw_Wc_Settings
      */
     public static function main_settings_attributes($panel)
     {
-        $atts[0] = __('None', 'vmw-wc');
+        $atts['none'] = __('None', 'vmw-wc');
 
         foreach (static::get_attributes() as $attribute) {
-            $atts[$attribute->attribute_id] = $attribute->attribute_label;
+	        $atts[$attribute->attribute_name] = $attribute->attribute_label;
         }
 
         $settings = [
@@ -113,7 +113,7 @@ class Vmw_Wc_Settings
                 'name'      => $setting,
                 'id'        => $key,
                 'type'      => 'select',
-                'default'   => 0,
+                'default'   => 'none',
                 'options'   => $atts
             ]);
         }

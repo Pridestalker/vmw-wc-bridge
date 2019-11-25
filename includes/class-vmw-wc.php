@@ -171,7 +171,6 @@ class Vmw_Wc
         $plugin_settings = Vmw_Wc_Settings::create($this->get_plugin_name(), $this->get_version());
 
         $this->get_loader()->add_action('tf_create_options', $plugin_settings, 'register');
-        $this->get_loader()->add_filter('whitelist_options', $plugin_settings, 'settings_whitelist', 11);
     }
 
     private function define_woocommerce_hooks()

@@ -17,9 +17,9 @@ abstract class Vmw_Wc_Sync
      */
     protected $data;
 
-	/**
-	 * @var TitanFramework|null
-	 */
+    /**
+     * @var TitanFramework|null
+     */
     protected static $titan = null;
 
     public function __construct($post_id)
@@ -85,35 +85,149 @@ abstract class Vmw_Wc_Sync
     {
         $product = static::getProduct($post_id);
 
-        $data = [
-	        [
-		        'name'      => 'name',
-		        'contents'  => $product->get_title(),
-	        ],
-	        [
-		        'name'      => 'price',
-		        'contents'  => $product->get_regular_price(),
-	        ],
-	        [
-		        'name'      => 'description',
-		        'contents'  => $product->get_description(),
-	        ],
-	        [
-		        'name'      => 'short_description',
-		        'contents'  => $product->get_short_description(),
-	        ],
-	        [
-		        'name'      => 'thumbnail',
-		        'contents'  => static::getThumbnailData($post_id),
-	        ],
-	        [
-		        'name'      => 'category',
-		        'contents'  => static::getProductCategory($post_id),
-	        ],
-        ];
+        $productDbo = Vmw_Wc_Product_Dbo::create();
 
+        $productDbo->setData('name', $product->get_title());
+        $productDbo->setData('price', $product->get_regular_price());
+        $productDbo->setData('description', $product->get_description());
+        $productDbo->setData('short_description', $product->get_short_description());
+        $productDbo->setData('thumbnail', static::getThumbnailData($post_id));
+        $productDbo->setData('category', static::getProductCategory($post_id));
+        static::setCountry($productDbo, $product);
+        static::setRegion($productDbo, $product);
+        static::setGrapes($productDbo, $product);
+        static::setAlcohol($productDbo, $product);
+        static::setYear($productDbo, $product);
+        static::setClassification($productDbo, $product);
+        static::setDomain($productDbo, $product);
+        static::setContents($productDbo, $product);
 
-        return $data;
+        var_dump($productDbo->getData());
+        die;
+
+        return $productDbo->getData();
+    }
+
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
+    protected static function setCountry($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_country') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'country',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_country')
+                )
+            );
+        }
+    }
+
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
+    protected static function setRegion($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_region') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'region',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_region')
+                )
+            );
+        }
+    }
+
+    protected static function setGrapes($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_grapes') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'grapes',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_grapes')
+                )
+            );
+        }
+    }
+
+    protected static function setAlcohol($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_alcohol') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'alcohol',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_alcohol')
+                )
+            );
+        }
+    }
+
+    protected static function setYear($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_year') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'year',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_year')
+                )
+            );
+        }
+    }
+
+    protected static function setClassification($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_classification') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'classification',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_classification')
+                )
+            );
+        }
+    }
+
+    protected static function setDomain($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_domain') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'domain',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_domain')
+                )
+            );
+        }
+    }
+
+    protected static function setContents($productDbo, $product)
+    {
+        if (static::getTitan()->getOption('vmw_contents') !== 'none') {
+            static::setDboData(
+                $productDbo,
+                'contents',
+                $product->get_attribute(
+                    static::getTitan()->getOption('vmw_contents')
+                )
+            );
+        }
+    }
+
+    /**
+     * @param Vmw_Wc_Product_Dbo $dbo
+     * @param string $key
+     * @param string $data
+     */
+    private static function setDboData($dbo, $key, $data)
+    {
+        $dbo->setData($key, $data);
     }
 
     private static function getThumbnailData($post_id)

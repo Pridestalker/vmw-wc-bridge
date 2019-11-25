@@ -42,6 +42,7 @@ class Vmw_Wc_WooCommerce
 
     public function includes()
     {
+        require_once __DIR__ . '/dbo-vmw-wc-product.php';
         require_once __DIR__ . '/class-vmw-wc-sync-tab.php';
         require_once __DIR__ . '/class-vmw-wc-sync-product.php';
     }
