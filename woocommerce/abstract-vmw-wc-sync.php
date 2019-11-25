@@ -102,9 +102,6 @@ abstract class Vmw_Wc_Sync
         static::setDomain($productDbo, $product);
         static::setContents($productDbo, $product);
 
-        var_dump($productDbo->getData());
-        die;
-
         return $productDbo->getData();
     }
 
