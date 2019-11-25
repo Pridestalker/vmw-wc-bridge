@@ -29,7 +29,14 @@ class Vmw_Wc_Activator
     protected static $options = [
         'vmw_base_url'  => 'https://verkoper.vindmijnwijn.nl/',
         'vmw_key'       => '',
-        'vmw_secret'    => '',
+        'vmw_country'   => '',
+        'vmw_region'    => '',
+        'vmw_grapes'    => '',
+        'vmw_alcohol'   => '',
+        'vmw_year'      => '',
+        'vmw_classification' => '',
+        'vmw_domain'    => '',
+        'vmw_contents'  => '',
     ];
 
     /**
@@ -41,7 +48,6 @@ class Vmw_Wc_Activator
      */
     public static function activate()
     {
-
         static::is_correct_wp_version();
         \add_action('admin_init', ['Vmw_Wc_Activator', 'register_options']);
         \do_action('vmw/bridge/init');

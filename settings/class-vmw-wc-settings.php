@@ -10,6 +10,19 @@
  */
 class Vmw_Wc_Settings
 {
+    protected static $options = [
+        'vmw_base_url'  => 'https://verkoper.vindmijnwijn.nl/',
+        'vmw_key'       => '',
+        'vmw_country'   => '',
+        'vmw_region'    => '',
+        'vmw_grapes'    => '',
+        'vmw_alcohol'   => '',
+        'vmw_year'      => '',
+        'vmw_classification' => '',
+        'vmw_domain'    => '',
+        'vmw_contents'  => '',
+    ];
+
     /**
      * Holds the plugin name of the current plugin.
      *
@@ -36,6 +49,7 @@ class Vmw_Wc_Settings
         $this->plugin_name = $plugin_name;
         $this->plugin_version = $plugin_version;
 
+        static::register_options();
         $this->includes();
     }
 
@@ -165,57 +179,57 @@ class Vmw_Wc_Settings
         add_settings_field(
             'vmw_region',
             __('Region attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_region_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
 
         add_settings_field(
             'vmw_grapes',
             __('Grape attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_grapes_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
 
         add_settings_field(
             'vmw_alcohol',
             __('Alcohol attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_alcohol_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
 
         add_settings_field(
             'vmw_year',
             __('Year attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_year_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
 
         add_settings_field(
             'vmw_classification',
             __('Classification attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_classification_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
 
         add_settings_field(
             'vmw_domain',
             __('Domain attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_domain_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
 
         add_settings_field(
             'vmw_contents',
             __('Contents attribute', 'vmw-wc'),
-            '__return_empty_string',
+            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_contents_input'],
             'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attribute-section'
+            'vmw-wc-bridge-main-attributes-section'
         );
     }
 
@@ -231,7 +245,7 @@ class Vmw_Wc_Settings
             'vmw_year',
             'vmw_classification',
             'vmw_domain',
-            'vmw_contents'
+            'vmw_contents',
         ];
 
         return $whitelist_options;
@@ -241,5 +255,14 @@ class Vmw_Wc_Settings
     {
         require_once __DIR__ . '/fields/main/class-vmw-wc-settings-main-fields.php';
         require_once __DIR__ . '/fields/attributes/class-vmw-wc-settings-attribute-fields.php';
+    }
+
+    private static function register_options()
+    {
+        foreach (static::$options as $option => $default) {
+            if (!get_option($option)) {
+                add_option($option, $default);
+            }
+        }
     }
 }
