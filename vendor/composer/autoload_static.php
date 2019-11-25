@@ -12,6 +12,7 @@ class ComposerStaticInitefe6e86c9a057387e651dc32bcce69b2
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '5d9c5be1aa1fbc12016e2c5bd16bbc70' => __DIR__ . '/..' . '/dusank/knapsack/src/collection_functions.php',
         'e5fde315a98ded36f9b25eb160f6c9fc' => __DIR__ . '/..' . '/dusank/knapsack/src/utility_functions.php',
+        '94da49b8a6ca768bd9153ee879ff4877' => __DIR__ . '/..' . '/gambitph/titan-framework/titan-framework.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'eb560c198217526cfde8ceb63ae508de' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v4p8.php',
     );

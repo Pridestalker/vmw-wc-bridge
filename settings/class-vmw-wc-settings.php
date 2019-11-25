@@ -10,18 +10,7 @@
  */
 class Vmw_Wc_Settings
 {
-    protected static $options = [
-        'vmw_base_url'  => 'https://verkoper.vindmijnwijn.nl/',
-        'vmw_key'       => '',
-        'vmw_country'   => '',
-        'vmw_region'    => '',
-        'vmw_grapes'    => '',
-        'vmw_alcohol'   => '',
-        'vmw_year'      => '',
-        'vmw_classification' => '',
-        'vmw_domain'    => '',
-        'vmw_contents'  => '',
-    ];
+    protected static $attributes = [];
 
     /**
      * Holds the plugin name of the current plugin.
@@ -37,6 +26,10 @@ class Vmw_Wc_Settings
      */
     protected $plugin_version;
 
+    /**
+     * @var TitanFramework
+     */
+    protected $titan;
 
     /**
      * Vmw_Wc_Settings constructor.
@@ -48,9 +41,7 @@ class Vmw_Wc_Settings
     {
         $this->plugin_name = $plugin_name;
         $this->plugin_version = $plugin_version;
-
-        static::register_options();
-        $this->includes();
+        $this->titan = TitanFramework::getInstance('vmw-wc');
     }
 
 
@@ -59,210 +50,81 @@ class Vmw_Wc_Settings
         return new self($plugin_name, $version);
     }
 
-    public static function register()
+    public function register()
     {
-        static::register_main_settings();
+        $panel = $this->titan->createAdminPage([
+            'name'      => __('VMW Bridge Settings', 'vmw-wc'),
+	        'parent'    => 'options-general.php'
+        ]);
+
+        static::main_settings_credentials($panel);
+        static::main_settings_attributes($panel);
+
+        $panel->createOption([
+            'type'      => 'save',
+        ]);
     }
 
-    public static function register_main_settings(): void
+    /**
+     * @param TitanFrameworkAdminPage $panel
+     */
+    public static function main_settings_credentials($panel)
     {
-        add_options_page(
-            __('VMW Bridge Settings', 'vmw-wc'),
-            __('VMW Bridge Settings', 'vmw-wc'),
-            'manage_options',
-            'vmw-wc-bridge-main-settings',
-            ['Vmw_Wc_Settings', 'render_page']
-        );
+        $panel->createOption([
+            'name'      => __('Vindmijnwijn.nl portal url', 'vmw-wc'),
+            'id'        => 'vmw_base_url',
+            'type'      => 'text',
+            'desc'      => _x('Caution, only edit when asked by staff.', 'VMW Bridge', 'vmw-wc'),
+            'default'   => 'https://verkoper.vindmijnwijn.nl/'
+        ]);
+
+        $panel->createOption([
+            'name'      => __('Vindmijnwijn.nl login key', 'vmw-wc'),
+            'id'        => 'vmw_key',
+            'type'      => 'textarea',
+            'desc'      => _x('', 'VMW Bridge', 'vmw-wc'),
+        ]);
     }
 
-    public static function render_page()
+    /**
+     * @param TitanFrameworkAdminPage $panel
+     */
+    public static function main_settings_attributes($panel)
     {
-        if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.'));
+        $atts[0] = __('None', 'vmw-wc');
+
+        foreach (static::get_attributes() as $attribute) {
+            $atts[$attribute->attribute_id] = $attribute->attribute_label;
         }
 
-        include_once __DIR__ . '/pages/settings/main.php';
-    }
-
-    public static function main_settings_credentials()
-    {
-        add_settings_section(
-            'vmw-wc-bridge-main-credentials-section',
-            __('Login credentials', 'vmw-wc'),
-            '__return_false',
-            'vmw-wc-bridge-main-settings'
-        );
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_base_url'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_key'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_secret'
-        );
-
-        add_settings_field(
-            'vmw_base_url',
-            __('Vindmijnwijn.nl portal url', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Main_fields', 'base_url_callback'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-credentials-section'
-        );
-
-        add_settings_field(
-            'vmw_key',
-            __('Vindmijnwijn.nl portal key', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Main_fields', 'key_callback'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-credentials-section'
-        );
-    }
-
-    public static function register_attribute_settings()
-    {
-        add_settings_section(
-            'vmw-wc-bridge-main-attributes-section',
-            __('Attributes', 'vmw-wc'),
-            '__return_false',
-            'vmw-wc-bridge-main-settings'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_country'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_grapes'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_alcohol'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_year'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_classification'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_domain'
-        );
-
-        register_setting(
-            'vmw-wc-bridge-main-settings',
-            'vmw_contents'
-        );
-
-        add_settings_field(
-            'vmw_country',
-            __('Country attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_country_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_region',
-            __('Region attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_region_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_grapes',
-            __('Grape attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_grapes_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_alcohol',
-            __('Alcohol attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_alcohol_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_year',
-            __('Year attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_year_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_classification',
-            __('Classification attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_classification_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_domain',
-            __('Domain attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_domain_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-
-        add_settings_field(
-            'vmw_contents',
-            __('Contents attribute', 'vmw-wc'),
-            ['Vmw_Wc_Settings_Attribute_fields', 'vmw_contents_input'],
-            'vmw-wc-bridge-main-settings',
-            'vmw-wc-bridge-main-attributes-section'
-        );
-    }
-
-    public static function settings_whitelist($whitelist_options)
-    {
-        $whitelist_options['vmw-wc-bridge-main-settings'] = [
-            'vmw_base_url',
-            'vmw_key',
-            'vmw_country',
-            'vmw_region',
-            'vmw_grapes',
-            'vmw_alcohol',
-            'vmw_year',
-            'vmw_classification',
-            'vmw_domain',
-            'vmw_contents',
+        $settings = [
+            'vmw_country'           => __('Country attribute', 'vmw-wc'),
+            'vmw_region'            => __('Region attribute', 'vmw-wc'),
+            'vmw_grapes'            => __('Grapes attribute', 'vmw-wc'),
+            'vmw_alcohol'           => __('Alcohol attribute', 'vmw-wc'),
+            'vmw_year'              => __('Year attribute', 'vmw-wc'),
+            'vmw_classification'    => __('Classification attribute', 'vmw-wc'),
+            'vmw_domain'            => __('Domain attribute', 'vmw-wc'),
+            'vmw_contents'          => __('Contents attribute', 'vmw-wc')
         ];
 
-        return $whitelist_options;
-    }
-
-    public function includes()
-    {
-        require_once __DIR__ . '/fields/main/class-vmw-wc-settings-main-fields.php';
-        require_once __DIR__ . '/fields/attributes/class-vmw-wc-settings-attribute-fields.php';
-    }
-
-    private static function register_options()
-    {
-        foreach (static::$options as $option => $default) {
-            if (!get_option($option)) {
-                add_option($option, $default);
-            }
+        foreach ($settings as $key => $setting) {
+            $panel->createOption([
+                'name'      => $setting,
+                'id'        => $key,
+                'type'      => 'select',
+                'default'   => 0,
+                'options'   => $atts
+            ]);
         }
+    }
+
+    private static function get_attributes()
+    {
+        if (!empty(static::$attributes)) {
+            return static::$attributes;
+        }
+
+        return static::$attributes = \wc_get_attribute_taxonomies();
     }
 }
