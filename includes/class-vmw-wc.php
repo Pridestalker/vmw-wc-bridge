@@ -29,6 +29,7 @@
  */
 class Vmw_Wc
 {
+	public static $update_url = 'https://github.com/Pridestalker/vmw-wc-bridge/';
 
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
@@ -75,6 +76,8 @@ class Vmw_Wc
             $this->version = '1.0.0';
         }
         $this->plugin_name = 'vmw-wc';
+
+        static::updateCheck();
 
         $this->load_dependencies();
         $this->set_locale();
@@ -222,5 +225,15 @@ class Vmw_Wc
     public function get_version()
     {
         return $this->version;
+    }
+
+    protected static function updateCheck()
+    {
+    	$updater = Puc_v4_Factory::buildUpdateChecker(
+    		static::$update_url,
+		    VMW_WC_FILE,
+		    'vmw-wc',
+		    12
+	    );
     }
 }
