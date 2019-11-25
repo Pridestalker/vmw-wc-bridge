@@ -17,6 +17,11 @@ abstract class Vmw_Wc_Sync
      */
     protected $data;
 
+	/**
+	 * @var TitanFramework|null
+	 */
+    protected static $titan = null;
+
     public function __construct($post_id)
     {
         $this->client  = new \GuzzleHttp\Client(
@@ -80,32 +85,35 @@ abstract class Vmw_Wc_Sync
     {
         $product = static::getProduct($post_id);
 
-        return [
-            [
-                'name'      => 'name',
-                'contents'  => $product->get_title(),
-            ],
-            [
-                'name'      => 'price',
-                'contents'  => $product->get_regular_price(),
-            ],
-            [
-                'name'      => 'description',
-                'contents'  => $product->get_description(),
-            ],
-            [
-                'name'      => 'short_description',
-                'contents'  => $product->get_short_description(),
-            ],
-            [
-                'name'      => 'thumbnail',
-                'contents'  => static::getThumbnailData($post_id),
-            ],
-            [
-                'name'      => 'category',
-                'contents'  => static::getProductCategory($post_id),
-            ],
+        $data = [
+	        [
+		        'name'      => 'name',
+		        'contents'  => $product->get_title(),
+	        ],
+	        [
+		        'name'      => 'price',
+		        'contents'  => $product->get_regular_price(),
+	        ],
+	        [
+		        'name'      => 'description',
+		        'contents'  => $product->get_description(),
+	        ],
+	        [
+		        'name'      => 'short_description',
+		        'contents'  => $product->get_short_description(),
+	        ],
+	        [
+		        'name'      => 'thumbnail',
+		        'contents'  => static::getThumbnailData($post_id),
+	        ],
+	        [
+		        'name'      => 'category',
+		        'contents'  => static::getProductCategory($post_id),
+	        ],
         ];
+
+
+        return $data;
     }
 
     private static function getThumbnailData($post_id)
@@ -155,7 +163,8 @@ abstract class Vmw_Wc_Sync
 
     public static function getToken()
     {
-        return get_option('vmw_key');
+        return static::getTitan()
+                     ->getOption('vmw_key');
     }
 
     public static function hasToken()
@@ -165,7 +174,8 @@ abstract class Vmw_Wc_Sync
 
     public static function getBaseUrl()
     {
-        return get_option('vmw_base_url');
+        return static::getTitan()
+                     ->getOption('vmw_base_url');
     }
 
     public static function hasBaseUrl()
@@ -212,5 +222,17 @@ abstract class Vmw_Wc_Sync
         }
 
         return 'Bearer ' . static::getToken();
+    }
+
+    /**
+     * @return TitanFramework
+     */
+    public static function getTitan()
+    {
+        if (null === static::$titan) {
+            static::$titan = TitanFramework::getInstance('vmw-wc');
+        }
+
+        return static::$titan;
     }
 }

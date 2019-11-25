@@ -54,7 +54,7 @@ class Vmw_Wc_Settings
     {
         $panel = $this->titan->createAdminPage([
             'name'      => __('VMW Bridge Settings', 'vmw-wc'),
-	        'parent'    => 'options-general.php'
+            'parent'    => 'options-general.php'
         ]);
 
         static::main_settings_credentials($panel);
