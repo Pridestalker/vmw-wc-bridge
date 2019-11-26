@@ -50,7 +50,10 @@ abstract class Vmw_Wc_Sync
             'POST',
             static::getRoute(),
             [
-                'multipart' => $this->data
+                'multipart' => $this->data,
+                'headers'   => [
+	                'X-WC-Grapes'   => ','
+                ]
             ]
         );
     }
@@ -61,7 +64,10 @@ abstract class Vmw_Wc_Sync
             'POST',
             static::getUpdateRoute($this->post_id),
             [
-                'multipart' => $this->data
+                'multipart' => $this->data,
+                'headers'   => [
+                    'X-WC-Grapes'   => ','
+                ]
             ]
         );
     }
@@ -139,19 +145,27 @@ abstract class Vmw_Wc_Sync
         }
     }
 
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
     protected static function setGrapes($productDbo, $product)
     {
         if (static::getTitan()->getOption('vmw_grapes') !== 'none') {
+            $grapes = $product->get_attribute(static::getTitan()->getOption('vmw_grapes'));
+
             static::setDboData(
                 $productDbo,
                 'grapes',
-                $product->get_attribute(
-                    static::getTitan()->getOption('vmw_grapes')
-                )
+                $grapes
             );
         }
     }
 
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
     protected static function setAlcohol($productDbo, $product)
     {
         if (static::getTitan()->getOption('vmw_alcohol') !== 'none') {
@@ -165,6 +179,10 @@ abstract class Vmw_Wc_Sync
         }
     }
 
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
     protected static function setYear($productDbo, $product)
     {
         if (static::getTitan()->getOption('vmw_year') !== 'none') {
@@ -178,6 +196,10 @@ abstract class Vmw_Wc_Sync
         }
     }
 
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
     protected static function setClassification($productDbo, $product)
     {
         if (static::getTitan()->getOption('vmw_classification') !== 'none') {
@@ -191,12 +213,16 @@ abstract class Vmw_Wc_Sync
         }
     }
 
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
     protected static function setDomain($productDbo, $product)
     {
         if (static::getTitan()->getOption('vmw_domain') !== 'none') {
             static::setDboData(
                 $productDbo,
-                'domain',
+                'maker',
                 $product->get_attribute(
                     static::getTitan()->getOption('vmw_domain')
                 )
@@ -204,6 +230,10 @@ abstract class Vmw_Wc_Sync
         }
     }
 
+    /**
+     * @param Vmw_Wc_Product_Dbo $productDbo
+     * @param WC_Product $product
+     */
     protected static function setContents($productDbo, $product)
     {
         if (static::getTitan()->getOption('vmw_contents') !== 'none') {
