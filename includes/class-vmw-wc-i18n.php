@@ -39,7 +39,7 @@ class Vmw_Wc_i18n
         load_plugin_textdomain(
             'vmw-wc',
             false,
-            dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
+	        dirname( plugin_basename( __FILE__ ), 2 ) . '/languages/'
         );
 
     }
