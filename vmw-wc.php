@@ -13,10 +13,10 @@
  * @package Vmw_Wc
  *
  * @wordpress-plugin
- * Plugin Name:       Vindmijnwijn woocommerce koppeling
+ * Plugin Name:       Vindmijnwijn WooCommerce Bridge
  * Plugin URI:        https://vindmijnwijn.nl/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       This plugin forms a bridge between your WooCommerce store, and the VMW Vendor Portal
+ * Version:           1.1.0
  * Author:            Doede Jaarsma communicatie
  * Author URI:        https://doedejaarsma.nl/diensten/web-development
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if (! defined('WPINC') ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('VMW_WC_VERSION', '1.0.0');
+define('VMW_WC_VERSION', '1.1.0');
 define('VMW_WC_FILE', __FILE__);
 
 /**
@@ -79,11 +79,11 @@ require plugin_dir_path(__FILE__) . 'includes/class-vmw-wc.php';
  */
 function run_vmw_wc()
 {
-    
+
     include_once __DIR__ . '/class-vmw-wc-autoloader.php';
     include_once __DIR__ . '/vendor/autoload.php';
     Vmw_Wc_Autoloader::init();
-    
+
     $plugin = new Vmw_Wc();
     $plugin->run();
 

@@ -4,153 +4,161 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vindmijnwijn WooCommerce Bridge 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vmw-wc\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2019-11-26T09:07:39+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.3.0\n"
+"PO-Revision-Date: 2019-11-26 10:12+0100\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Domain: vmw-wc\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
 
 #. Plugin Name of the plugin
 msgid "Vindmijnwijn WooCommerce Bridge"
-msgstr ""
+msgstr "Vindmijnwijn WooCommerce Koppeling"
 
 #. Plugin URI of the plugin
 msgid "https://vindmijnwijn.nl/"
-msgstr ""
+msgstr "https://vindmijnwijn.nl/"
 
 #. Description of the plugin
-msgid "This plugin forms a bridge between your WooCommerce store, and the VMW Vendor Portal"
+msgid ""
+"This plugin forms a bridge between your WooCommerce store, and the VMW "
+"Vendor Portal"
 msgstr ""
+"Deze plugin zorgt voor een koppeling tussen jouw WooCommerce winkel en het "
+"Vindmijnwijn.nl Verkoper Portaal"
 
 #. Author of the plugin
 msgid "Doede Jaarsma communicatie"
-msgstr ""
+msgstr "Doede Jaarsma communicatie"
 
 #. Author URI of the plugin
 msgid "https://doedejaarsma.nl/diensten/web-development"
-msgstr ""
+msgstr "https://doedejaarsma.nl/diensten/web-development"
 
-#: settings/class-vmw-wc-settings.php:56
-#: settings/pages/settings/main.php:2
+#: settings/class-vmw-wc-settings.php:56 settings/pages/settings/main.php:2
 msgid "VMW Bridge Settings"
-msgstr ""
+msgstr "VMW Koppeling Instellingen"
 
 #: settings/class-vmw-wc-settings.php:74
 msgid "Vindmijnwijn.nl portal url"
-msgstr ""
+msgstr "Vindmijnwijn.nl portaal url"
 
 #: settings/class-vmw-wc-settings.php:77
 msgctxt "VMW Bridge"
 msgid "Caution, only edit when asked by staff."
 msgstr ""
+"Let op, pas dit alleen aan als dit door medewerkers van Vindmijnwijn.nl "
+"gevraagd word."
 
 #: settings/class-vmw-wc-settings.php:82
 msgid "Vindmijnwijn.nl login key"
-msgstr ""
+msgstr "Vindmijnwijn.nl Login sleutel"
 
 #: settings/class-vmw-wc-settings.php:94
 #: settings/fields/attributes/class-vmw-wc-settings-attribute-fields.php:61
 msgid "None"
-msgstr ""
+msgstr "Geen"
 
 #: settings/class-vmw-wc-settings.php:101
 msgid "Country attribute"
-msgstr ""
+msgstr "Land attribuut"
 
 #: settings/class-vmw-wc-settings.php:102
 msgid "Region attribute"
-msgstr ""
+msgstr "Regio attribuut"
 
 #: settings/class-vmw-wc-settings.php:103
 msgid "Grapes attribute"
-msgstr ""
+msgstr "Druiven attribuut"
 
 #: settings/class-vmw-wc-settings.php:104
 msgid "Alcohol attribute"
-msgstr ""
+msgstr "Alcohol attribuut"
 
 #: settings/class-vmw-wc-settings.php:105
 msgid "Year attribute"
-msgstr ""
+msgstr "Jaar attribuut"
 
 #: settings/class-vmw-wc-settings.php:106
 msgid "Classification attribute"
-msgstr ""
+msgstr "Classificatie attribuut"
 
 #: settings/class-vmw-wc-settings.php:107
 msgid "Domain attribute"
-msgstr ""
+msgstr "Domein attribuut"
 
 #: settings/class-vmw-wc-settings.php:108
 msgid "Contents attribute"
-msgstr ""
+msgstr "Inhoud attribuut"
 
 #: woocommerce/abstract-vmw-wc-sync.php:264
 msgid "No thumbnail supplied. Aborting."
-msgstr ""
+msgstr "Fout! Geen productfoto toegevoegd."
 
 #: woocommerce/abstract-vmw-wc-sync.php:330
 #: woocommerce/abstract-vmw-wc-sync.php:343
 #: woocommerce/class-vmw-wc-existing-product.php:28
 #: woocommerce/class-vmw-wc-new-product.php:33
 msgid "No URL passed to base Vindmijnwijn.nl URL. Aborting."
-msgstr ""
+msgstr "Fout! Geen link ingevoerd naar Vindmijnwijn.nl."
 
 #: woocommerce/abstract-vmw-wc-sync.php:362
 #: woocommerce/class-vmw-wc-existing-product.php:20
 #: woocommerce/class-vmw-wc-new-product.php:25
-msgid "Incorrect data passed to Vindmijnwijn.nl, disable product sync to continue."
-msgstr ""
+msgid ""
+"Incorrect data passed to Vindmijnwijn.nl, disable product sync to continue."
+msgstr "Foutieve data doorgevoerd naar Vindmijnwijn.nl."
 
 #: woocommerce/class-vmw-wc-existing-product.php:24
 #: woocommerce/class-vmw-wc-new-product.php:29
 msgid "No Vindmijnwijn.nl Vendor token supplied. Aborting."
-msgstr ""
+msgstr "Fout! Geen Vindmijnwijn.nl inlog code ingevoerd."
 
 #: woocommerce/class-vmw-wc-sync-tab.php:35
 msgid "Vindmijnwijn.nl Sync"
-msgstr ""
+msgstr "Synchroniseer met Vindmijnwijn.nl"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:56
 msgid "Sync product"
-msgstr ""
+msgstr "Product synchroniseren"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:57
 msgid "Sends the product to Vindmijnwijn.nl on save"
-msgstr ""
+msgstr "Stuurt product naar Vindmijnwijn.nl bij opslaan"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:65
 msgid "Product category"
-msgstr ""
+msgstr "Product categorie"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:66
 msgid "Select the correct category for Vindmijnwijn.nl"
-msgstr ""
+msgstr "Kies de overeenkomende categorie voor Vindmijnwijn.nl"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:68
 msgid "Red wine"
-msgstr ""
+msgstr "Rode wijn"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:69
 msgid "White wine"
-msgstr ""
+msgstr "Witte wijn"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:70
 msgid "Rose wine"
-msgstr ""
+msgstr "Rose wijn"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:71
 msgid "Sparkling wine"
-msgstr ""
+msgstr "Mousserende wijn"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:72
 msgid "Dessert wine"
-msgstr ""
+msgstr "Dessert wijn"
 
 #: woocommerce/class-vmw-wc-sync-tab.php:76
 msgid "Push to Vindmijnwijn.nl"
-msgstr ""
+msgstr "Doorzetten naar Vindmijnwijn.nl"
